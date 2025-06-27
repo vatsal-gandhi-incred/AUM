@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUM Growth and Milestone Achievements</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        .chart-container {
+            position: relative;
+            height: 600px;
+            margin-bottom: 30px;
+        }
+        .milestones {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .milestone-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .milestone-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        .milestone-500 { border-left-color: #3498db; }
+        .milestone-1000 { border-left-color: #e74c3c; }
+        .milestone-2000 { border-left-color: #f39c12; }
+        .milestone-3000 { border-left-color: #27ae60; }
+        .milestone-amount {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .milestone-date {
+            font-size: 1rem;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+        .milestone-500 .milestone-amount { color: #3498db; }
+        .milestone-1000 .milestone-amount { color: #e74c3c; }
+        .milestone-2000 .milestone-amount { color: #f39c12; }
+        .milestone-3000 .milestone-amount { color: #27ae60; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">AUM Growth Journey</h1>
+        <p class="subtitle">Milestone Achievements (2019-2025)</p>
+        
+        <div class="chart-container">
+            <canvas id="aumChart"></canvas>
+        </div>
+        
+        <div class="milestones">
+            <div class="milestone-card milestone-500">
+                <div class="milestone-amount">₹500 Cr</div>
+                <div class="milestone-date">May 2022</div>
+            </div>
+            <div class="milestone-card milestone-1000">
+                <div class="milestone-amount">₹1000 Cr</div>
+                <div class="milestone-date">Jan 2023</div>
+            </div>
+            <div class="milestone-card milestone-2000">
+                <div class="milestone-amount">₹2000 Cr</div>
+                <div class="milestone-date">May 2024</div>
+            </div>
+            <div class="milestone-card milestone-3000">
+                <div class="milestone-amount">₹3000 Cr</div>
+                <div class="milestone-date">Jun 2025</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('aumChart').getContext('2d');
+        
+        // Data points (complete timeline with milestone highlights only)
+        const data = {
+            labels: ['2019', '2020', '2021', '2022', '500 Cr', '2023', '2024', '2000 Cr', '2025', '3000 Cr'],
+            datasets: [{
+                label: 'AUM (₹ Crores)',
+                data: [245, 344, 341, 475, 536, 1002, 1873, 2027, 2868, 3002],
+                borderColor: '#667eea',
+                backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                borderWidth: 4,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: [
+                    'transparent', // 2019
+                    'transparent', // 2020
+                    'transparent', // 2021
+                    'transparent', // 2022
+                    '#3498db', // 500 Cr milestone
+                    '#e74c3c', // 1000 Cr milestone (2023)
+                    'transparent', // 2024
+                    '#f39c12', // 2000 Cr milestone
+                    'transparent', // 2025
+                    '#27ae60'  // 3000 Cr milestone
+                ],
+                pointBorderColor: [
+                    'transparent', 'transparent', 'transparent', 'transparent',
+                    '#2980b9', '#c0392b', 'transparent', '#e67e22', 'transparent', '#229954'
+                ],
+                pointRadius: [0, 0, 0, 0, 12, 12, 0, 12, 0, 12],
+                pointBorderWidth: [0, 0, 0, 0, 3, 3, 0, 3, 0, 3]
+            }]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        borderColor: '#667eea',
+                        borderWidth: 1,
+                        cornerRadius: 8,
+                        displayColors: false,
+                        callbacks: {
+                            label: function(context) {
+                                const milestones = {
+                                    4: '🎯 500 Cr Milestone',
+                                    5: '🎯 1000 Cr Milestone', 
+                                    7: '🎯 2000 Cr Milestone',
+                                    9: '🎯 3000 Cr Milestone'
+                                };
+                                const milestone = milestones[context.dataIndex];
+                                return milestone ? 
+                                    [`₹${context.parsed.y} Cr`, milestone] : 
+                                    `₹${context.parsed.y} Cr`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)',
+                            lineWidth: 1
+                        },
+                        ticks: {
+                            color: '#2c3e50',
+                            font: {
+                                size: 12,
+                                weight: '500'
+                            }
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        max: 3200,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)',
+                            lineWidth: 1
+                        },
+                        ticks: {
+                            color: '#2c3e50',
+                            font: {
+                                size: 12,
+                                weight: '500'
+                            },
+                            callback: function(value) {
+                                return '₹' + value + ' Cr';
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                },
+                elements: {
+                    line: {
+                        borderJoinStyle: 'round'
+                    }
+                }
+            }
+        };
+
+        new Chart(ctx, config);
+    </script>
+</body>
+</html>
